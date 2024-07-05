@@ -14,12 +14,10 @@
 
     let payload = await dataResponse.json();
 
-    console.log(payload);
+    console.log(`payload: ${payload}`);
 
     return payload;
   };
-
-  console.log(getGeoData());
 </script>
 
 <div class="container">
