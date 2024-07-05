@@ -1,16 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let payload: any;
-  let clientIP: any;
-  let geoData: any;
-
-  let continent: any;
-  let country: string;
-  let city: string;
-  let region: string;
-  let localTime: any;
-
   let options: RequestInit = {
     method: "GET",
     headers: {
@@ -18,38 +8,35 @@
     },
   };
 
-  onMount(async () => {
+  const getGeoData = async () => {
     const dataResponse = await fetch(
       `https://where-am-i-api.vercel.app/api/get-me`,
       options
     );
 
-    payload = await dataResponse.json();
+    let payload = await dataResponse.json();
 
     console.log(payload);
 
-    clientIP = payload["client_ip"];
-    geoData = payload["geodata"];
-
-    continent = geoData["continent"];
-    country = geoData["country"];
-    city = geoData["city"];
-    region = geoData["region"];
-    localTime = geoData["localtime"];
-  });
+    return payload;
+  };
 </script>
 
 <div class="container">
   <p class="title">i know where you are!</p>
-  <p class="subtitle">your IP address: {clientIP}</p>
-  <div class="data">
-    <p>continent: {continent}</p>
-    <p>country: {country}</p>
+  {#await getGeoData()}
+    <p>fetching data...</p>
+  {:then data}
+    <p class="subtitle">your IP address: {data["client_ip"]}</p>
+    <div class="data">
+      <p>continent: {data["geodata"]["continent"]}</p>
+      <p>country: {data["geodata"]["country"]}</p>
 
-    <p>region: {region}</p>
-    <p>city: {city}</p>
-    <p>local time: {localTime}</p>
-  </div>
+      <p>region: {data["geodata"]["region"]}</p>
+      <p>city: {data["geodata"]["city"]}</p>
+      <p>local time: {data["geodata"]["localtime"]}</p>
+    </div>
+  {/await}
 </div>
 
 <style>
