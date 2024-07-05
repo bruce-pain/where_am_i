@@ -14,7 +14,7 @@
 
     let payload = await dataResponse.json();
 
-    console.log(`payload: ${payload}`);
+    console.log(payload);
 
     return payload;
   };
