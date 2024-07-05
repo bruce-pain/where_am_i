@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   let options: RequestInit = {
     method: "GET",
     headers: {
@@ -20,6 +18,8 @@
 
     return payload;
   };
+
+  console.log(getGeoData());
 </script>
 
 <div class="container">
