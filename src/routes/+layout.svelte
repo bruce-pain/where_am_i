@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../app.css";
+  import { inject } from '@vercel/analytics'
 </script>
 
 <svelte:head>
